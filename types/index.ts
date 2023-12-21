@@ -1,6 +1,8 @@
 // ====== USER PARAMS
 
-export interface User {
+import { ICategory } from "@/lib/database/models/category.model";
+
+export interface IUser {
   _id: string;
   clerkId: string;
   email: string;
@@ -27,6 +29,22 @@ export type UpdateUserParams = {
 };
 
 // ====== EVENT PARAMS
+export interface IEvent {
+  _id: string;
+  title: string;
+  description: string;
+  location: string;
+  imageUrl: string;
+  startDateTime: Date;
+  endDateTime: Date;
+  price: string;
+  isFree: boolean;
+  url?: string;
+  category: ICategory;
+  organizer: IUser;
+  createdAt: Date;
+}
+
 export type CreateEventParams = {
   userId: string;
   event: {
@@ -110,6 +128,10 @@ export type Event = {
 };
 
 // ====== CATEGORY PARAMS
+export interface Category {
+  _id: string;
+  name: string;
+}
 export type CreateCategoryParams = {
   categoryName: string;
 };
