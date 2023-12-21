@@ -1,11 +1,11 @@
 import { IEvent } from "@/types";
 import Card from "./Card";
+import Pagination from "./Pagination";
 
 interface Props {
   data: IEvent[];
   emptyTitle: string;
   emptyStateSubtext: string;
-  limit: number;
   page: number | string;
   totalPages?: number;
   urlParamName?: string;
@@ -16,7 +16,6 @@ const Collection: React.FC<Props> = ({
   data,
   emptyTitle,
   emptyStateSubtext,
-  limit,
   page,
   urlParamName,
   collectionType,
@@ -41,6 +40,13 @@ const Collection: React.FC<Props> = ({
               );
             })}
           </ul>
+          {totalPages > 1 && (
+            <Pagination
+              urlParamName={urlParamName}
+              page={page}
+              totalPages={totalPages}
+            />
+          )}
         </div>
       );
     else

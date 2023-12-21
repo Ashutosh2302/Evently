@@ -42,7 +42,7 @@ const Dropdown: React.FC<Props> = ({ onChangeHandler, value }) => {
   useEffect(() => {
     const getCategories = async () => {
       const categoryList = await getAllCategories();
-      console.log({ categoryList });
+
       categoryList && setCategories(categoryList);
     };
     getCategories();

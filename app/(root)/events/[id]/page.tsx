@@ -83,9 +83,7 @@ const EventDetails = async ({
             </div>
             <div className="flex flex-col gap-2">
               <p className="p-bold-20 text-grey-600">What You'll Learn:</p>
-              <p className="p-medium-16 lg:p-medium-18">
-                {event.description}
-              </p>{" "}
+              <p className="p-medium-16 lg:p-medium-18">{event.description}</p>
               <p className="p-medium-16 lg:p-medium-18 truncate text-primary-500 underline">
                 {event.url}
               </p>
@@ -100,9 +98,8 @@ const EventDetails = async ({
           emptyTitle="No events found"
           emptyStateSubtext="Come back later"
           collectionType="All_Events"
-          limit={6}
-          page={1}
-          totalPages={2}
+          page={searchParams.page as string}
+          totalPages={relatedEvents?.totalPages}
         />
       </section>
     </>

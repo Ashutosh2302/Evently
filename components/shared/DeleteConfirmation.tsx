@@ -23,7 +23,6 @@ interface Props {
 }
 export const DeleteConfirmation: React.FC<Props> = ({ eventId }) => {
   const pathname = usePathname();
-  console.log({ pathname });
   let [isPending, startTransition] = useTransition();
 
   return (
