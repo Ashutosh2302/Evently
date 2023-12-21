@@ -40,7 +40,7 @@ export const createOrder = async (order: CreateOrderParams) => {
   try {
     await connectToDatabase();
     const newOrder = await Order.create({
-      ...Order,
+      ...order,
       event: order.eventId,
       buyer: order.buyerId,
     });
