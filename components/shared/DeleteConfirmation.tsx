@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/alert-dialog";
 
 import { deleteEvent } from "@/lib/actions/event.actions";
+import Spinner from "./Spinner";
 
 interface Props {
   eventId: string;
@@ -54,7 +55,7 @@ export const DeleteConfirmation: React.FC<Props> = ({ eventId }) => {
               })
             }
           >
-            {isPending ? "Deleting..." : "Delete"}
+            {isPending ? <Spinner /> : "Delete"}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

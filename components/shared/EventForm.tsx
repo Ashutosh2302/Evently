@@ -29,6 +29,7 @@ import { useUploadThing } from "@/lib/uploadthing";
 import { useRouter } from "next/navigation";
 import { createEvent, updateEvent } from "@/lib/actions/event.actions";
 import { IEvent } from "@/types";
+import Spinner from "./Spinner";
 
 interface Props {
   userId: string;
@@ -347,7 +348,7 @@ const EventForm: React.FC<Props> = ({ userId, type, event }) => {
           disabled={form.formState.isSubmitting}
           className="button col-span-2 w-full"
         >
-          {form.formState.isSubmitting ? "Submitting..." : `${type} Event`}
+          {form.formState.isSubmitting ? <Spinner /> : `${type} Event`}
         </Button>
       </form>
     </Form>
