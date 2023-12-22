@@ -10,15 +10,6 @@ import Image from "next/image";
 import Link from "next/link";
 
 export default async function Home({ searchParams }: SearchParamProps) {
-  const { sessionClaims } = auth();
-  const homeUserId = sessionClaims?.userId as string;
-  console.log("home", { homeUserId });
-
-  const { userId } = auth();
-  const user = await currentUser();
-  const email = user?.emailAddresses[0].emailAddress;
-  console.log("overfloe", userId, user);
-
   const page = Number(searchParams?.page) || 1;
   const searchText = (searchParams?.query as string) || "";
   const category = (searchParams?.category as string) || "";
