@@ -6,12 +6,16 @@ import {
 } from "@/lib/actions/event.actions";
 import { formatDateTime } from "@/lib/utils";
 import { SearchParamProps } from "@/types";
+import { auth } from "@clerk/nextjs";
 import Image from "next/image";
 
 const EventDetails = async ({
   params: { id },
   searchParams,
 }: SearchParamProps) => {
+  const { sessionClaims } = auth();
+  const userId = sessionClaims?.userId as string;
+  console.log({ userId });
   const event = await getEventById(id);
   const relatedEvents = await getRelatedEventsByCategory({
     categoryId: event.category._id,
