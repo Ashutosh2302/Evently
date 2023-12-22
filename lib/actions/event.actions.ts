@@ -14,6 +14,7 @@ import { revalidatePath } from "next/cache";
 import { connectToDatabase } from "../database";
 import Category from "../database/models/category.model";
 import Event from "../database/models/event.model";
+import Order from "../database/models/order.model";
 import User from "../database/models/user.model";
 import { handleError } from "../utils";
 
@@ -109,6 +110,9 @@ export const getAllEvents = async ({
 export const deleteEvent = async ({ eventId, path }: DeleteEventParams) => {
   try {
     await connectToDatabase();
+    const eventOrders = await Order.find({ event: eventId });
+    if (eventOrders && eventOrders.length) return;
+
     const deletedEvent = await Event.findByIdAndDelete(eventId);
     if (deletedEvent) revalidatePath(path);
   } catch (error) {
