@@ -12,6 +12,7 @@ interface Props {
 const CheckoutButton: React.FC<Props> = ({ event }) => {
   const { user } = useUser();
   const loggedInUserId = user?.publicMetadata.userId as string;
+  console.log({ loggedInUserId });
   const hasEventFinished = new Date(event.endDateTime) < new Date();
   return (
     <div className="flex items-center gap-3">
