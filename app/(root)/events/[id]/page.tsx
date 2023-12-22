@@ -1,6 +1,5 @@
 import CheckoutButton from "@/components/shared/CheckoutButton";
 import Collection from "@/components/shared/Collection";
-import { useLoggedInUserId } from "@/hooks/useLoggedInUser";
 import {
   getEventById,
   getRelatedEventsByCategory,
@@ -14,8 +13,8 @@ const EventDetails = async ({
   params: { id },
   searchParams,
 }: SearchParamProps) => {
-  const loggedInUserId = await useLoggedInUserId();
-  console.log("profile", loggedInUserId);
+  const { sessionClaims } = auth();
+  const loggedInUserId = sessionClaims?.userId as string;
   const event = await getEventById(id);
   const relatedEvents = await getRelatedEventsByCategory({
     categoryId: event.category._id,

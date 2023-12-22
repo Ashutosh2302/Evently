@@ -1,12 +1,11 @@
 import EventForm from "@/components/shared/EventForm";
-import { useLoggedInUserId } from "@/hooks/useLoggedInUser";
+
 import { auth } from "@clerk/nextjs";
 import React from "react";
 
 const CreateEvent = async () => {
-  const loggedInUserId = await useLoggedInUserId();
-  console.log("create event", loggedInUserId);
-
+  const { sessionClaims } = auth();
+  const loggedInUserId = sessionClaims?.userId as string;
   return (
     <>
       <section className="bg-primary-50 bg-dotted-pattern bg-cover bg-center py-5 md:py-10">
