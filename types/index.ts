@@ -8,14 +8,14 @@ export interface IUser {
   email: string;
   username: string;
   firstName: string;
-  lastName: string;
+  lastName?: string;
   photo: string;
 }
 
 export type CreateUserParams = {
   clerkId: string;
   firstName: string;
-  lastName: string;
+  lastName?: string;
   username: string;
   email: string;
   photo: string;
@@ -23,7 +23,7 @@ export type CreateUserParams = {
 
 export type UpdateUserParams = {
   firstName: string;
-  lastName: string;
+  lastName?: string;
   username: string;
   photo: string;
 };
@@ -119,7 +119,7 @@ export type Event = {
   organizer: {
     _id: string;
     firstName: string;
-    lastName: string;
+    lastName?: string;
   };
   category: {
     _id: string;
