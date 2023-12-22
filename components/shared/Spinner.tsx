@@ -1,4 +1,8 @@
-const Spinner = () => {
+interface Props {
+  showText?: boolean;
+}
+
+const Spinner: React.FC<Props> = ({ showText = false }) => {
   return (
     <div role="status">
       <svg
@@ -19,8 +23,7 @@ const Spinner = () => {
           fill="currentFill"
         />
       </svg>
-
-      <span className="sr-only">Loading...</span>
+      {showText && <span className="ml-2">Loading...</span>}
     </div>
   );
 };
