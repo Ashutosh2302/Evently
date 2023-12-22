@@ -4,15 +4,21 @@ import { Search } from "@/components/shared/Search";
 import { Button } from "@/components/ui/button";
 import { getAllEvents } from "@/lib/actions/event.actions";
 import { SearchParamProps } from "@/types";
-import { auth } from "@clerk/nextjs";
+import { auth, currentUser } from "@clerk/nextjs";
 
 import Image from "next/image";
 import Link from "next/link";
 
 export default async function Home({ searchParams }: SearchParamProps) {
   const { sessionClaims } = auth();
-  const userId = sessionClaims?.userId as string;
-  console.log("home", { userId });
+  const homeUserId = sessionClaims?.userId as string;
+  console.log("home", { homeUserId });
+
+  const { userId } = auth();
+  const user = await currentUser();
+  const email = user?.emailAddresses[0].emailAddress;
+  console.log("overfloe", userId, user);
+
   const page = Number(searchParams?.page) || 1;
   const searchText = (searchParams?.query as string) || "";
   const category = (searchParams?.category as string) || "";
