@@ -7,10 +7,8 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
@@ -30,7 +28,7 @@ import { useRouter } from "next/navigation";
 import { createEvent, updateEvent } from "@/lib/actions/event.actions";
 import { IEvent } from "@/types";
 import Spinner from "./Spinner";
-
+import { toast, useToast } from "@/components/ui/use-toast";
 interface Props {
   userId: string;
   type: "Create" | "Update";
@@ -73,6 +71,10 @@ const EventForm: React.FC<Props> = ({ userId, type, event }) => {
         if (newEvent) {
           form.reset();
           router.push(`/events/${newEvent._id}`);
+          toast({
+            title: "Event Created",
+            description: "A new event has been created successfully",
+          });
         }
       } catch (error) {
         console.log(error);
@@ -92,6 +94,10 @@ const EventForm: React.FC<Props> = ({ userId, type, event }) => {
         if (updatedEvent) {
           form.reset();
           router.push(`/events/${event._id}`);
+          toast({
+            title: "Event updated",
+            description: `${event.title} has been updated successfully`,
+          });
         }
       } catch (error) {
         console.log(error);
