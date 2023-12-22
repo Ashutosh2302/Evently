@@ -4,8 +4,6 @@ import { Search } from "@/components/shared/Search";
 import { Button } from "@/components/ui/button";
 import { getAllEvents } from "@/lib/actions/event.actions";
 import { SearchParamProps } from "@/types";
-import { auth, currentUser } from "@clerk/nextjs";
-
 import Image from "next/image";
 import Link from "next/link";
 

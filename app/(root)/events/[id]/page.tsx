@@ -1,5 +1,6 @@
 import CheckoutButton from "@/components/shared/CheckoutButton";
 import Collection from "@/components/shared/Collection";
+import { useLoggedInUserId } from "@/hooks/useLoggedInUser";
 import {
   getEventById,
   getRelatedEventsByCategory,
@@ -13,9 +14,8 @@ const EventDetails = async ({
   params: { id },
   searchParams,
 }: SearchParamProps) => {
-  const { sessionClaims } = auth();
-  const userId = sessionClaims?.userId as string;
-  console.log({ userId });
+  const loggedInUserId = await useLoggedInUserId();
+  console.log("profile", loggedInUserId);
   const event = await getEventById(id);
   const relatedEvents = await getRelatedEventsByCategory({
     categoryId: event.category._id,
@@ -55,7 +55,7 @@ const EventDetails = async ({
               </div>
             </div>
             {/* checkout */}
-            <CheckoutButton event={event} />
+            <CheckoutButton event={event} loggedInUserId={loggedInUserId} />
             <div className="flex flex-col gap-5">
               <div className="flex gap-2 md:gap-3">
                 <Image

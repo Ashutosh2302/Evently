@@ -1,5 +1,6 @@
 import Collection from "@/components/shared/Collection";
 import { Button } from "@/components/ui/button";
+import { useLoggedInUserId } from "@/hooks/useLoggedInUser";
 import { getEventsByUser } from "@/lib/actions/event.actions";
 import { getOrdersByUser } from "@/lib/actions/order.actions";
 import { IOrder } from "@/lib/database/models/order.model";
@@ -9,20 +10,21 @@ import Link from "next/link";
 import React from "react";
 
 const ProfilePage = async ({ searchParams }: SearchParamProps) => {
-  const { sessionClaims } = auth();
-  const loggenInUserId = sessionClaims?.userId as string;
-
+  // const { sessionClaims } = auth();
+  // const loggendInUserId = sessionClaims?.userId as string;
+  const loggedInUserId = await useLoggedInUserId();
+  console.log("profile", loggedInUserId);
   const ordersPage = Number(searchParams?.ordersPage) || 1;
   const eventsPage = Number(searchParams?.eventsPage) || 1;
 
   const organizedEvents = await getEventsByUser({
-    userId: loggenInUserId,
+    userId: loggedInUserId,
     limit: 6,
     page: eventsPage,
   });
 
   const orders = await getOrdersByUser({
-    userId: loggenInUserId,
+    userId: loggedInUserId,
     page: ordersPage,
   });
 
