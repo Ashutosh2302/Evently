@@ -14,7 +14,7 @@ interface Props {
 const Card = async ({ event, hasOrderLink, hidePrice }: Props) => {
   const { sessionClaims } = auth();
   const loggedInUserId = sessionClaims?.userId as string;
-
+  console.log({ loggedInUserId });
   const isEventCreater = loggedInUserId === event.organizer._id.toString();
   return (
     <div className="group relative flex min-h-[380px] w-full max-w-[400px] flex-col overflow-hidden rounded-xl bg-white shadow-md transition-all hover:shadow-lg md:min-h-[438px]">

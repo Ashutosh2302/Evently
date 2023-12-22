@@ -15,6 +15,7 @@ const EventDetails = async ({
 }: SearchParamProps) => {
   const { sessionClaims } = auth();
   const loggedInUserId = sessionClaims?.userId as string;
+  console.log({ loggedInUserId });
   const event = await getEventById(id);
   const relatedEvents = await getRelatedEventsByCategory({
     categoryId: event.category._id,
