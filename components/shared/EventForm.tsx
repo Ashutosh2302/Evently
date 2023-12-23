@@ -45,7 +45,6 @@ const EventForm: React.FC<Props> = ({ type, event }) => {
   }, [user]);
 
   const loggedInUserId = user?.publicMetadata.userId as string;
-  console.log("in create", loggedInUserId);
 
   const router = useRouter();
   const { startUpload } = useUploadThing("imageUploader");

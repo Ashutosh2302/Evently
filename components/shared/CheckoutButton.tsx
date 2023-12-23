@@ -22,7 +22,6 @@ const CheckoutButton: React.FC<Props> = ({ event }) => {
   }, [user]);
 
   const loggedInUserId = user?.publicMetadata.userId as string;
-  console.log("in checkout", loggedInUserId);
 
   const hasEventFinished = new Date(event.endDateTime) < new Date();
 
