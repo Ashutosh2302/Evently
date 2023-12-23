@@ -1,11 +1,7 @@
 import EventForm from "@/components/shared/EventForm";
-
-import { auth } from "@clerk/nextjs";
 import React from "react";
 
 const CreateEvent = async () => {
-  const { sessionClaims } = auth();
-  const loggedInUserId = sessionClaims?.userId as string;
   return (
     <>
       <section className="bg-primary-50 bg-dotted-pattern bg-cover bg-center py-5 md:py-10">
@@ -14,7 +10,7 @@ const CreateEvent = async () => {
         </h3>
       </section>
       <div className="wrapper my-8">
-        <EventForm userId={loggedInUserId} type="Create" />
+        <EventForm type="Create" />
       </div>
     </>
   );

@@ -17,7 +17,7 @@ import { eventDefaultValues } from "@/constants";
 import Dropdown from "./Dropdown";
 import { Textarea } from "../ui/textarea";
 import FileUploader from "./FileUploader";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -29,12 +29,24 @@ import { createEvent, updateEvent } from "@/lib/actions/event.actions";
 import { IEvent } from "@/types";
 import Spinner from "./Spinner";
 import { toast, useToast } from "@/components/ui/use-toast";
+import { useUser } from "@clerk/nextjs";
 interface Props {
-  userId: string;
   type: "Create" | "Update";
   event?: IEvent;
 }
-const EventForm: React.FC<Props> = ({ userId, type, event }) => {
+const EventForm: React.FC<Props> = ({ type, event }) => {
+  const { user } = useUser();
+  if (!user) return null;
+
+  useEffect(() => {
+    setTimeout(async () => {
+      user?.reload();
+    }, 2000);
+  }, [user]);
+
+  const loggedInUserId = user?.publicMetadata.userId as string;
+  console.log("in create", loggedInUserId);
+
   const router = useRouter();
   const { startUpload } = useUploadThing("imageUploader");
   const [files, setFiles] = useState<File[]>([]);
@@ -65,7 +77,7 @@ const EventForm: React.FC<Props> = ({ userId, type, event }) => {
       try {
         const newEvent = await createEvent({
           event: { ...values, imageUrl: uploadedImageUrl },
-          userId,
+          userId: loggedInUserId,
           path: "/profile",
         });
         if (newEvent) {
@@ -87,7 +99,7 @@ const EventForm: React.FC<Props> = ({ userId, type, event }) => {
       }
       try {
         const updatedEvent = await updateEvent({
-          userId,
+          userId: loggedInUserId,
           event: { ...values, imageUrl: uploadedImageUrl, _id: event._id },
           path: `/events/${event._id}`,
         });
@@ -351,10 +363,14 @@ const EventForm: React.FC<Props> = ({ userId, type, event }) => {
         <Button
           type="submit"
           size="lg"
-          disabled={form.formState.isSubmitting}
+          disabled={form.formState.isSubmitting || !user.publicMetadata.userId}
           className="button col-span-2 w-full"
         >
-          {form.formState.isSubmitting ? <Spinner /> : `${type} Event`}
+          {form.formState.isSubmitting || !user.publicMetadata.userId ? (
+            <Spinner />
+          ) : (
+            `${type} Event`
+          )}
         </Button>
       </form>
     </Form>
