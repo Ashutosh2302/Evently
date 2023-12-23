@@ -7,11 +7,19 @@ import Checkout from "./Checkout";
 
 interface Props {
   event: IEvent;
-  loggedInUserId: string;
 }
 
-const CheckoutButton: React.FC<Props> = ({ event, loggedInUserId }) => {
-  console.log("in chekcout", { loggedInUserId });
+const CheckoutButton: React.FC<Props> = ({ event }) => {
+  const { user } = useUser();
+  if (!user) return null;
+
+  setTimeout(async () => {
+    user?.reload();
+  }, 2000);
+
+  const loggedInUserId = user?.publicMetadata.userId as string;
+  console.log("in checkout", loggedInUserId);
+
   const hasEventFinished = new Date(event.endDateTime) < new Date();
   return (
     <div className="flex items-center gap-3">

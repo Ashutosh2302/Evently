@@ -6,16 +6,12 @@ import {
 } from "@/lib/actions/event.actions";
 import { formatDateTime } from "@/lib/utils";
 import { SearchParamProps } from "@/types";
-import { auth } from "@clerk/nextjs";
 import Image from "next/image";
 
 const EventDetails = async ({
   params: { id },
   searchParams,
 }: SearchParamProps) => {
-  const { sessionClaims } = auth();
-  const loggedInUserId = sessionClaims?.userId as string;
-  console.log({ loggedInUserId });
   const event = await getEventById(id);
   const relatedEvents = await getRelatedEventsByCategory({
     categoryId: event.category._id,
@@ -55,7 +51,7 @@ const EventDetails = async ({
               </div>
             </div>
             {/* checkout */}
-            <CheckoutButton event={event} loggedInUserId={loggedInUserId} />
+            <CheckoutButton event={event} />
             <div className="flex flex-col gap-5">
               <div className="flex gap-2 md:gap-3">
                 <Image
