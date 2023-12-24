@@ -28,8 +28,9 @@ import { useRouter } from "next/navigation";
 import { createEvent, updateEvent } from "@/lib/actions/event.actions";
 import { IEvent } from "@/types";
 import Spinner from "./Spinner";
-import { toast, useToast } from "@/components/ui/use-toast";
 import { useUser } from "@clerk/nextjs";
+import { toast } from "react-hot-toast";
+import ToastMessage from "./ToastMessage";
 interface Props {
   type: "Create" | "Update";
   event?: IEvent;
@@ -82,10 +83,13 @@ const EventForm: React.FC<Props> = ({ type, event }) => {
         if (newEvent) {
           form.reset();
           router.push(`/events/${newEvent._id}`);
-          toast({
-            title: "Event Created",
-            description: "A new event has been created successfully",
-          });
+
+          toast.success(
+            <ToastMessage
+              message="Event Created"
+              description="A new event has been created successfully"
+            />
+          );
         }
       } catch (error) {
         console.log(error);
@@ -97,19 +101,29 @@ const EventForm: React.FC<Props> = ({ type, event }) => {
         return;
       }
       try {
-        const updatedEvent = await updateEvent({
+        await updateEvent({
           userId: loggedInUserId,
           event: { ...values, imageUrl: uploadedImageUrl, _id: event._id },
           path: `/events/${event._id}`,
-        });
-        if (updatedEvent) {
-          form.reset();
-          router.push(`/events/${event._id}`);
-          toast({
-            title: "Event updated",
-            description: `${event.title} has been updated successfully`,
+        })
+          .then((event) => {
+            form.reset();
+            router.push(`/events/${event._id}`);
+            toast.success(
+              <ToastMessage
+                message="Event updated"
+                description={`${event.title} has been updated successfully`}
+              />
+            );
+          })
+          .catch(() => {
+            toast.error(
+              <ToastMessage
+                message={`Failed to update ${event.title}`}
+                description="Something went wrong"
+              />
+            );
           });
-        }
       } catch (error) {
         console.log(error);
       }
