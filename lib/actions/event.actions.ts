@@ -122,7 +122,7 @@ export const deleteEvent = async ({ eventId, path }: DeleteEventParams) => {
     if (deletedEvent) revalidatePath(path);
     return {
       error: false,
-      message: `${deletedEvent.title!} Deleted successffully`,
+      message: `${deletedEvent.title!} Deleted successfully`,
     };
   } catch (error) {
     console.error("in catch", error);
