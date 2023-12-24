@@ -137,7 +137,7 @@ export async function updateEvent({ userId, event, path }: UpdateEventParams) {
   try {
     await connectToDatabase();
 
-    const eventToUpdate = await Event.findById("75656");
+    const eventToUpdate = await Event.findById(event);
 
     if (!eventToUpdate) {
       throw new Error("Event not found");
