@@ -56,7 +56,7 @@ const Card = async ({ event, hasOrderLink, hidePrice }: Props) => {
           </p>
         </Link>
 
-        <div className="flex-between w-full">
+        <div className="flex-between w-full mt-auto">
           <p className="p-medium-14 md:p-medium-16 text-grey-600">
             {event.organizer.firstName} {event.organizer.lastName}
           </p>
