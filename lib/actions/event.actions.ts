@@ -117,7 +117,7 @@ export const deleteEvent = async ({ eventId, path }: DeleteEventParams) => {
         message: "Orders are associated with this event",
       };
 
-    const deletedEvent: any = await Event.findByIdAndDelete("23");
+    const deletedEvent: any = await Event.findByIdAndDelete(eventId);
 
     if (deletedEvent) revalidatePath(path);
     return {
