@@ -111,13 +111,25 @@ export const deleteEvent = async ({ eventId, path }: DeleteEventParams) => {
   try {
     await connectToDatabase();
     const eventOrders = await Order.find({ event: eventId });
-    if (eventOrders && eventOrders.length) return;
+    if (eventOrders && eventOrders.length)
+      return {
+        error: true,
+        message: "Orders are associated with this event",
+      };
 
-    const deletedEvent = await Event.findByIdAndDelete(eventId);
+    const deletedEvent: any = await Event.findByIdAndDelete("23");
+
     if (deletedEvent) revalidatePath(path);
+    return {
+      error: false,
+      message: `${deletedEvent.title!} Deleted successffully`,
+    };
   } catch (error) {
-    console.error(error);
-    throw new Error(typeof error === "string" ? error : JSON.stringify(error));
+    console.error("in catch", error);
+    return {
+      error: true,
+      message: "Something went wrong, please try again later",
+    };
   }
 };
 
@@ -125,7 +137,7 @@ export async function updateEvent({ userId, event, path }: UpdateEventParams) {
   try {
     await connectToDatabase();
 
-    const eventToUpdate = await Event.findById(event._id);
+    const eventToUpdate = await Event.findById("75656");
 
     if (!eventToUpdate) {
       throw new Error("Event not found");
@@ -143,7 +155,8 @@ export async function updateEvent({ userId, event, path }: UpdateEventParams) {
 
     return JSON.parse(JSON.stringify(updatedEvent));
   } catch (error) {
-    handleError(error);
+    console.error(error);
+    throw new Error("something went wrong");
   }
 }
 export async function getRelatedEventsByCategory({

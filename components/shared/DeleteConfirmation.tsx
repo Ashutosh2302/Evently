@@ -18,6 +18,8 @@ import {
 
 import { deleteEvent } from "@/lib/actions/event.actions";
 import Spinner from "./Spinner";
+import { toast } from "react-hot-toast";
+import ToastMessage from "./ToastMessage";
 
 interface Props {
   eventId: string;
@@ -51,7 +53,25 @@ export const DeleteConfirmation: React.FC<Props> = ({ eventId }) => {
           <AlertDialogAction
             onClick={() =>
               startTransition(async () => {
-                await deleteEvent({ eventId, path: pathname });
+                const deletedEvent = await deleteEvent({
+                  eventId,
+                  path: pathname,
+                });
+
+                if (deletedEvent.error)
+                  toast.error(
+                    <ToastMessage
+                      message="Failed to delete event"
+                      description={deletedEvent.message}
+                    />
+                  );
+                else
+                  toast.success(
+                    <ToastMessage
+                      message="Event Deleted"
+                      description={deletedEvent.message}
+                    />
+                  );
               })
             }
           >

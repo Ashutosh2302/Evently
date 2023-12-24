@@ -1,6 +1,7 @@
 import Footer from "@/components/shared/Footer";
 import Header from "@/components/shared/Header";
-import { Toaster } from "@/components/ui/toaster";
+import { Toaster } from "react-hot-toast";
+
 export default function RootLayout({
   children,
 }: {
@@ -10,7 +11,8 @@ export default function RootLayout({
     <div className="flex h-screen flex-col">
       <Header />
       <main className="flex-1">{children}</main>
-      <Toaster />
+      <Toaster position="bottom-right" reverseOrder={false} />
+
       <Footer />
     </div>
   );
